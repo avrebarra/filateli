@@ -31,7 +31,7 @@ func New(conf Config) Service {
 	return &DefaultService{conf}
 }
 
-func (s *DefaultService) ConvertToHTML(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error) {
+func (s *DefaultService) ConvertToHTML(c postman.Collection, lite bool) (buf *bytes.Buffer, err error) {
 	// populate envCollection with collection variables
 	if len(c.Variables) > 0 {
 		envCollection.SetCollectionVariables(c.Variables)
@@ -52,7 +52,13 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, envCollection postm
 		"markdown":        markdown,
 		"e":               e,
 	})
-	t, err := tm.Parse(s.IndexHTML)
+
+	base := s.IndexHTML
+	if lite {
+		base = s.IndexHTMLLite
+	}
+
+	t, err := tm.Parse(base)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +78,7 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, envCollection postm
 	return
 }
 
-func (s *DefaultService) ConvertToMarkdown(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error) {
+func (s *DefaultService) ConvertToMarkdown(c postman.Collection) (buf *bytes.Buffer, err error) {
 	// populate envCollection with collection variables
 	if len(c.Variables) > 0 {
 		envCollection.SetCollectionVariables(c.Variables)
@@ -111,7 +117,7 @@ func (s *DefaultService) ConvertToMarkdown(c postman.Collection, envCollection p
 	return
 }
 
-func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error) {
+func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection) (buf *bytes.Buffer, err error) {
 	// populate envCollection with collection variables
 	if len(c.Variables) > 0 {
 		envCollection.SetCollectionVariables(c.Variables)
@@ -138,7 +144,7 @@ func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection, envCollecti
 		log.Fatal(err)
 	}
 
-	buf, err = s.ConvertToMarkdown(c, envCollection)
+	buf, err = s.ConvertToMarkdown(c)
 	mdHTML := markdown(buf.String())
 
 	data := struct {

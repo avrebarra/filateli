@@ -7,7 +7,7 @@ import (
 )
 
 type Service interface {
-	ConvertToHTML(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error)
-	ConvertToMarkdown(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error)
-	ConvertToMarkdownHTML(c postman.Collection, envCollection postman.Environment) (buf *bytes.Buffer, err error)
+	ConvertToHTML(c postman.Collection, lite bool) (buf *bytes.Buffer, err error)
+	ConvertToMarkdown(c postman.Collection) (buf *bytes.Buffer, err error)
+	ConvertToMarkdownHTML(c postman.Collection) (buf *bytes.Buffer, err error)
 }

@@ -47,6 +47,9 @@ var CommandConvert = &cobra.Command{
 		case "html":
 			convertToHTML()
 
+		case "litehtml":
+			convertToLiteHTML()
+
 		case "markdown":
 			convertToMarkdown()
 
@@ -62,7 +65,7 @@ var CommandConvert = &cobra.Command{
 func init() {
 	CommandConvert.PersistentFlags().StringVarP(&argsOut, "out", "o", "", "output file path")
 	CommandConvert.PersistentFlags().StringVarP(&argsEnv, "env", "e", "", "environment file path")
-	CommandConvert.PersistentFlags().StringVarP(&argsMode, "mode", "m", "html", "convertion mode [html, markdown, webmarkdown]")
+	CommandConvert.PersistentFlags().StringVarP(&argsMode, "mode", "m", "html", "convertion mode [html, litehtml, webmarkdown, markdown]")
 }
 
 func convertToMarkdown() {
@@ -73,7 +76,7 @@ func convertToMarkdown() {
 	err = collection.ParseFrom(buffile)
 	handle("cannot parse target file", err)
 
-	bufmd, err := filatelisvc.ConvertToMarkdown(collection, postman.Environment{})
+	bufmd, err := filatelisvc.ConvertToMarkdown(collection)
 	handle("conversion to markdown failed", err)
 
 	lines := strings.Split(bufmd.String(), "\n")
@@ -111,7 +114,7 @@ func convertToMarkdownHTML() {
 	err = collection.ParseFrom(buffile)
 	handle("cannot parse target file", err)
 
-	bufmd, err := filatelisvc.ConvertToMarkdownHTML(collection, postman.Environment{})
+	bufmd, err := filatelisvc.ConvertToMarkdownHTML(collection)
 	handle("conversion to markdown failed", err)
 
 	lines := strings.Split(bufmd.String(), "\n")
@@ -149,7 +152,7 @@ func convertToHTML() {
 	err = collection.ParseFrom(buffile)
 	handle("cannot parse target file", err)
 
-	bufmd, err := filatelisvc.ConvertToHTML(collection, postman.Environment{})
+	bufmd, err := filatelisvc.ConvertToHTML(collection, false)
 	handle("conversion to html failed", err)
 
 	lines := strings.Split(bufmd.String(), "\n")
@@ -187,4 +190,42 @@ func readFile(filepath string) (buf *bytes.Buffer, err error) {
 
 	buf = bytes.NewBuffer(content)
 	return
+}
+
+func convertToLiteHTML() {
+	buffile, err := readFile(argsTargetFile)
+	handle("cannot read target file", err)
+
+	collection := postman.Collection{}
+	err = collection.ParseFrom(buffile)
+	handle("cannot parse target file", err)
+
+	bufmd, err := filatelisvc.ConvertToHTML(collection, true)
+	handle("conversion to html failed", err)
+
+	lines := strings.Split(bufmd.String(), "\n")
+	for i, l := range lines {
+		if strings.HasPrefix(l, "<!---") && strings.HasSuffix(l, "-->") {
+			lines = append(lines[:i], lines[i+1:]...)
+		}
+	}
+
+	// contents := strings.Join(lines, "\n")
+	var contents string
+	var ws int
+	for _, l := range lines {
+		if l == "" {
+			ws++
+		} else {
+			ws = 0
+		}
+		if ws <= 3 {
+			contents += "\n" + l
+		}
+	}
+
+	err = ioutil.WriteFile(argsOut, []byte(contents), 0644)
+	handle("failed writing file", err)
+
+	log.Printf("html file generated in %s", argsOut)
 }
