@@ -37,12 +37,13 @@ For more info visit: https://github.com/avrebarra/filateli
 func init() {
 	// init dependencies
 	filatelisvc = filateli.New(filateli.Config{
-		BootstrapCSS: readFileFromStorage("templates/default/bootstrap.min.css"),
-		BootstrapJS:  readFileFromStorage("templates/default/bootstrap.min.js"),
-		IndexHTML:    readFileFromStorage("templates/default/index.html"),
-		JqueryJS:     readFileFromStorage("templates/default/jquery.min.js"),
-		ScriptsJS:    readFileFromStorage("templates/default/scripts.js"),
-		StylesCSS:    readFileFromStorage("templates/default/styles.css"),
+		IndexHTML:     readFileFromStorage("templates/web/index.html"),
+		IndexHTMLLite: readFileFromStorage("templates/web/index-lite.html"),
+		BootstrapCSS:  readFileFromStorage("templates/web/bootstrap.min.css"),
+		BootstrapJS:   readFileFromStorage("templates/web/bootstrap.min.js"),
+		JqueryJS:      readFileFromStorage("templates/web/jquery.min.js"),
+		ScriptsJS:     readFileFromStorage("templates/web/scripts.js"),
+		StylesCSS:     readFileFromStorage("templates/web/styles.css"),
 
 		GithubMarkdownMinCSS: readFileFromStorage("templates/markdown/github-markdown.min.css"),
 		IndexMarkdown:        readFileFromStorage("templates/markdown/index.md"),

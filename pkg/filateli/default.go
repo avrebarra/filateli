@@ -9,13 +9,14 @@ import (
 )
 
 type Config struct {
-	BootstrapJS  string
-	BootstrapCSS string
-	IndexHTML    string
-	JqueryJS     string
-	ScriptsJS    string
-	StylesCSS    string
-	ExtraCSS     string
+	BootstrapJS   string
+	BootstrapCSS  string
+	IndexHTML     string
+	IndexHTMLLite string
+	JqueryJS      string
+	ScriptsJS     string
+	StylesCSS     string
+	ExtraCSS      string
 
 	IndexMarkdown        string
 	MarkdownHTML         string
