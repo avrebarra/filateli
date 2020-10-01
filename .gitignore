@@ -1,6 +1,7 @@
 *.DS_Store
 *.pdf
 vendor
+dist
 .idea
 
 # Binaries for programs and plugins
