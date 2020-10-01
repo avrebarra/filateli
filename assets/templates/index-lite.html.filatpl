@@ -16,12 +16,12 @@
         @{{ end }}@
     </title>
     <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <style media="screen">
-        @{{ .Assets.BootstrapCSS | css }}@
-        @{{ .Assets.StylesCSS | css }}@
-        @{{ if (ne .Assets.ExtraCSS "") }}@
-        @{{ .Assets.ExtraCSS | css }}@
-        @{{ end }}@
+body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-heading{color:#333;background-color:#fff;border-color:#efefef}.request-item .panel-title{font-size:12px!important}.panel-title .glyphicon{font-size:12px;font-weight:700}.collection-intro{padding-bottom:10px!important}ul{list-style:none}ul li{margin-left:-30px;line-height:16pt}ul li .endpoint_menu{-webkit-transition:all .5s ease-out;-moz-transition:all .5s ease-out;-o-transition:all .5s ease-out;transition:all .5s ease-out}ul li .endpoint_menu:hover{margin-left:5px;font-weight:bolder}a{text-decoration:none!important}.request-method{padding:4px}.border-success{border:1px solid #3c763d}.border-info{border:1px solid #337ab7}.border-warning{border:1px solid #f0ad4e}.border-danger{border:1px solid #a94442}pre{outline:1px solid #fff;padding:5px;margin:5px}.string{color:#16a085}.number{color:#f39c12}.boolean{color:#2980b9}.null{color:#ff00ff}.key{color:#e74c3c}.null{color:#8e44ad}.love-color{color:#c0392b;font-weight:700}
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -451,11 +451,13 @@
                 <!-- end main div to display items -->
             </div>
         </div>
-        <!-- necessary sciprts -->
+        <!-- necessary scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
         <script type="text/javascript">
-            @{{ .Assets.JqueryJS | js }}@
-            @{{ .Assets.BootstrapJS | js }}@
-            @{{ .Assets.ScriptsJS | js }}@
+function escapeHtml(e){var t={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};return e.replace(/[&<>"']/g,function(e){return t[e]})}function IsJsonString(e){try{JSON.parse(e)}catch(e){return!1}return!0}function syntaxHighlight(e){return(e=e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")).replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,function(e){var t="number";return/^"/.test(e)?t=/:$/.test(e)?"key":"string":/true|false/.test(e)?t="boolean":/null/.test(e)&&(t="null"),'<span class="'+t+'">'+e+"</span>"})}$(document).ready(function(){$(".collapse.in").each(function(){$(this).siblings(".panel-heading").find(".glyphicon").addClass("glyphicon-minus").removeClass("glyphicon-plus")}),$(".collapse").on("show.bs.collapse",function(){$(this).parent().find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus")}).on("hide.bs.collapse",function(){$(this).parent().find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus")}),$(".resp-prettyprint").each(function(){var e=$(this),t=e.html();if(e.html(""),'"'===(t=(t=(t=(t=t.replaceAll("\\n","")).replaceAll("\\t","")).replaceAll("\\","")).trim()).charAt(0)&&(t=(t=t.substr(1)).slice(0,-1)),IsJsonString(t)){var n=JSON.parse(t),l=JSON.stringify(n,null,4);e.html("<pre>"+syntaxHighlight(l)+"</pre>")}else e.html("<pre>"+escapeHtml(t)+"</pre>")}),$(".resp-selector").change(function(){$(this).find("option").map(function(){$("#"+this.value).hide()});var e=$(this).find("option:selected");$("#"+e.val()).show()}),$('[data-toggle="tooltip"]').tooltip()}),String.prototype.replaceAll=function(e,t){var n=new RegExp(RegExp.quote(e),"g");return this.replace(n,t)},RegExp.quote=function(e){return e.replace(/([.?*+^$[\]\\(){}-])/g,"\\$1")};
         </script>
 </body>
 <br>

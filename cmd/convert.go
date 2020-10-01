@@ -47,13 +47,13 @@ var CommandConvert = &cobra.Command{
 		case "html":
 			convertToHTML()
 
-		case "litehtml":
+		case "html-lite":
 			convertToLiteHTML()
 
 		case "markdown":
 			convertToMarkdown()
 
-		case "webmarkdown":
+		case "markdown-web":
 			convertToMarkdownHTML()
 
 		default:
@@ -65,7 +65,7 @@ var CommandConvert = &cobra.Command{
 func init() {
 	CommandConvert.PersistentFlags().StringVarP(&argsOut, "out", "o", "", "output file path")
 	CommandConvert.PersistentFlags().StringVarP(&argsEnv, "env", "e", "", "environment file path")
-	CommandConvert.PersistentFlags().StringVarP(&argsMode, "mode", "m", "html", "convertion mode [html, litehtml, webmarkdown, markdown]")
+	CommandConvert.PersistentFlags().StringVarP(&argsMode, "mode", "m", "html", "convertion mode [html, html-lite, markdown, markdown-web]")
 }
 
 func convertToMarkdown() {
