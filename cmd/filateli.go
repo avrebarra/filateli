@@ -37,10 +37,10 @@ For more info visit: https://github.com/avrebarra/filateli
 func init() {
 	// init dependencies
 	filatelisvc = filateli.New(filateli.Config{
-		IndexHTML:     readFileFromStorage("templates/index.html.filatpl"),
-		IndexHTMLLite: readFileFromStorage("templates/index-lite.html.filatpl"),
-		IndexMarkdown: readFileFromStorage("templates/markdown.md.filatpl"),
-		MarkdownHTML:  readFileFromStorage("templates/markdown-web.html.filatpl"),
+		BuiltinTemplateHTML:         readFileFromStorage("templates/index.html.filatpl"),
+		BuiltinTemplateHTMLLite:     readFileFromStorage("templates/index-lite.html.filatpl"),
+		BuiltinTemplateMarkdown:     readFileFromStorage("templates/markdown.md.filatpl"),
+		BuiltinTemplateMarkdownHTML: readFileFromStorage("templates/markdown-web.html.filatpl"),
 	})
 
 	// register child commands

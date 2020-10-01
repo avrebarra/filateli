@@ -16,7 +16,7 @@ var (
 	argsTargetFile string
 	argsOut        string
 	argsEnv        string
-	argsMode       string
+	argsTemplate   string
 )
 
 var CommandConvert = &cobra.Command{
@@ -43,7 +43,7 @@ var CommandConvert = &cobra.Command{
 			}
 		}
 
-		switch argsMode {
+		switch argsTemplate {
 		case "html":
 			convertToHTML()
 
@@ -57,7 +57,7 @@ var CommandConvert = &cobra.Command{
 			convertToMarkdownHTML()
 
 		default:
-			log.Fatalf("unknown mode: %s", argsMode)
+			log.Fatalf("unknown mode: %s", argsTemplate)
 		}
 	},
 }
@@ -65,7 +65,7 @@ var CommandConvert = &cobra.Command{
 func init() {
 	CommandConvert.PersistentFlags().StringVarP(&argsOut, "out", "o", "", "output file path")
 	CommandConvert.PersistentFlags().StringVarP(&argsEnv, "env", "e", "", "environment file path")
-	CommandConvert.PersistentFlags().StringVarP(&argsMode, "mode", "m", "html", "convertion mode [html, html-lite, markdown, markdown-web]")
+	CommandConvert.PersistentFlags().StringVarP(&argsTemplate, "template", "t", "html", "template to use as output. available builtins: [html, html-lite, markdown, markdown-web]")
 }
 
 func convertToMarkdown() {

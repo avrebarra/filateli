@@ -9,18 +9,10 @@ import (
 )
 
 type Config struct {
-	BootstrapJS   string
-	BootstrapCSS  string
-	IndexHTML     string
-	IndexHTMLLite string
-	JqueryJS      string
-	ScriptsJS     string
-	StylesCSS     string
-	ExtraCSS      string
-
-	IndexMarkdown        string
-	MarkdownHTML         string
-	GithubMarkdownMinCSS string
+	BuiltinTemplateHTML         string
+	BuiltinTemplateHTMLLite     string
+	BuiltinTemplateMarkdown     string
+	BuiltinTemplateMarkdownHTML string
 }
 
 type DefaultService struct {
@@ -41,8 +33,6 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, lite bool) (buf *by
 	tm.Delims("@{{", "}}@")
 	tm.Funcs(template.FuncMap{
 		"html":            htmlTemplate,
-		"css":             cssTemplate,
-		"js":              jsTemplate,
 		"eHTML":           eHTML,
 		"snake":           snake,
 		"addOne":          addOne,
@@ -53,9 +43,9 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, lite bool) (buf *by
 		"e":               e,
 	})
 
-	base := s.IndexHTML
+	base := s.BuiltinTemplateHTML
 	if lite {
-		base = s.IndexHTMLLite
+		base = s.BuiltinTemplateHTMLLite
 	}
 
 	t, err := tm.Parse(base)
@@ -100,7 +90,7 @@ func (s *DefaultService) ConvertToMarkdown(c postman.Collection) (buf *bytes.Buf
 		"trimQueryParams": trimQueryParams,
 		"e":               e,
 	})
-	t, err := tm.Parse(s.IndexMarkdown)
+	t, err := tm.Parse(s.BuiltinTemplateMarkdown)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -139,7 +129,7 @@ func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection) (buf *bytes
 		"e":               e,
 	})
 
-	t, err := tm.Parse(s.MarkdownHTML)
+	t, err := tm.Parse(s.BuiltinTemplateMarkdownHTML)
 	if err != nil {
 		log.Fatal(err)
 	}
