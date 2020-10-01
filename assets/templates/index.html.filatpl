@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>
         <{ if .Data.Info.Name }>
-        <{ .Data.Info.Name | e }>
+        <{ .Data.Info.Name | FilaEnv }>
         <{ end }>
         <{ if .Data.Info.Description }>
         &nbsp;|&nbsp;
@@ -39,7 +39,7 @@
             <div class="col-md-12 collection-intro">
                 <h3><{ .Data.Info.Name }></h3>
                 <p>
-                    <{ .Data.Info.Description | markdown | e | html }>
+                    <{ .Data.Info.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }>
                 </p>
             </div>
             <!-- end introduction -->
@@ -49,11 +49,11 @@
                     <ul>
                         <{ range $index, $c := .Data.Items }>
                         <li>
-                            <strong><a href="#<{ $c.Name | snake }>"><{ $c.Name }></a></strong>
+                            <strong><a href="#<{ $c.Name | FilaChangeCaseSnake }>"><{ $c.Name }></a></strong>
                             <ul>
                                 <{ range $i, $item := $c.Items }>
                                 <li><a class="endpoint_menu"
-                                        href="#jump-<{ $c.Name | snake }>-<{ $item.Name | snake }>"><{ $item.Name }></a>
+                                        href="#jump-<{ $c.Name | FilaChangeCaseSnake }>-<{ $item.Name | FilaChangeCaseSnake }>"><{ $item.Name }></a>
                                 </li>
                                 <{ end }>
                             </ul>
@@ -68,50 +68,50 @@
                     <{ range $di, $d := .Data.Items }>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title" id="<{ $d.Name | snake }>">
+                            <h3 class="panel-title" id="<{ $d.Name | FilaChangeCaseSnake }>">
                                 <{ $d.Name }>
                                 <span class="badge"><{ len $d.Items }></span>
                             </h3>
                         </div>
                         <div class="panel-body">
                             <p>
-                                <{ $d.Description | markdown | e | html }>
+                                <{ $d.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }>
                             </p>
                             <div class="request-item">
-                                <div class="panel-group" id="accordion-<{ $d.Name | snake }>">
+                                <div class="panel-group" id="accordion-<{ $d.Name | FilaChangeCaseSnake }>">
                                     <!-- single request item -->
                                     <{ range $ii, $item := $d.Items }>
-                                    <div class="panel panel-<{ $item.Request.Method | color }>"
-                                        id="jump-<{ $d.Name | snake }>-<{ $item.Name | snake }>">
+                                    <div class="panel panel-<{ $item.Request.Method | FilaTemplateHTMLColorOfVerb }>"
+                                        id="jump-<{ $d.Name | FilaChangeCaseSnake }>-<{ $item.Name | FilaChangeCaseSnake }>">
                                         <div class="panel-heading">
                                             <small class="pull-right text-muted">
                                                 <{ $item.Request.Body.Mode }>
                                             </small>
-                                            <a class="text-<{ $item.Request.Method | color }>" data-toggle="collapse"
-                                                data-parent="#accordion-<{ $d.Name | snake }>"
-                                                href="#collapse-<{ $d.Name | snake }>-<{ $item.Name | snake }>">
+                                            <a class="text-<{ $item.Request.Method | FilaTemplateHTMLColorOfVerb }>" data-toggle="collapse"
+                                                data-parent="#accordion-<{ $d.Name | FilaChangeCaseSnake }>"
+                                                href="#collapse-<{ $d.Name | FilaChangeCaseSnake }>-<{ $item.Name | FilaChangeCaseSnake }>">
                                                 <h4 class="panel-title">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                     <{ if $item.Name }>
                                                     <strong><{ $item.Name }></strong> &nbsp;|&nbsp;
                                                     <{ end }>
                                                     <strong
-                                                        class="request-method border-<{ $item.Request.Method | color }>">
+                                                        class="request-method border-<{ $item.Request.Method | FilaTemplateHTMLColorOfVerb }>">
                                                         <{ $item.Request.Method }>
                                                     </strong>
                                                     &nbsp;
-                                                    <{ $item.Request.URL.Raw | trimQueryParams | e }>
+                                                    <{ $item.Request.URL.Raw | FilaURLTrimQueryParams | FilaEnv }>
                                                 </h4>
                                             </a>
                                         </div>
-                                        <div id="collapse-<{ $d.Name | snake }>-<{ $item.Name | snake }>"
+                                        <div id="collapse-<{ $d.Name | FilaChangeCaseSnake }>-<{ $item.Name | FilaChangeCaseSnake }>"
                                             class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <{ if $item.Request.Description }>
                                                 <h5 class="label label-default">Description</h5>
                                                 <br>
                                                 <small>
-                                                    <{ $item.Request.Description | markdown | e | html }>
+                                                    <{ $item.Request.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }>
                                                 </small>
                                                 <br><br>
                                                 <{ end }>
@@ -128,9 +128,9 @@
                                                     <tbody>
                                                         <{ range $ih, $h := $item.Request.Headers }>
                                                         <tr>
-                                                            <td><{ $h.Key | e }></td>
-                                                            <td><{ $h.Value |e }></td>
-                                                            <td><{ $h.Description | markdown | e | html }></td>
+                                                            <td><{ $h.Key | FilaEnv }></td>
+                                                            <td><{ $h.Value | FilaEnv }></td>
+                                                            <td><{ $h.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                         </tr>
                                                         <{ end }>
                                                     </tbody>
@@ -149,9 +149,9 @@
                                                     <tbody>
                                                         <{ range $iq, $q := $item.Request.URL.Query }>
                                                         <tr>
-                                                            <td><{ $q.Key | e }></td>
-                                                            <td><{ $q.Value | e }></td>
-                                                            <td><{ $q.Description | markdown | e | html }></td>
+                                                            <td><{ $q.Key | FilaEnv }></td>
+                                                            <td><{ $q.Value | FilaEnv }></td>
+                                                            <td><{ $q.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                         </tr>
                                                         <{ end }>
                                                     </tbody>
@@ -170,9 +170,9 @@
                                                     <tbody>
                                                         <{ range $iq, $q := $item.Request.URL.Variables }>
                                                         <tr>
-                                                            <td><{ $q.Key | e }></td>
-                                                            <td><{ $q.Value | e }></td>
-                                                            <td><{ $q.Description | markdown | e | html }></td>
+                                                            <td><{ $q.Key | FilaEnv }></td>
+                                                            <td><{ $q.Value | FilaEnv }></td>
+                                                            <td><{ $q.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                         </tr>
                                                         <{ end }>
                                                     </tbody>
@@ -184,7 +184,7 @@
                                                 <{ if $item.Request.Body.Raw }>
                                                 <h5 class="label label-primary">Body</h5>
                                                 <span class="resp-prettyprint">
-                                                    <{ $item.Request.Body.Raw | eHTML }>
+                                                    <{ $item.Request.Body.Raw | FilaEscapeHTML }>
                                                 </span>
                                                 <div class="clearfix"></div>
                                                 <{ end }>
@@ -206,9 +206,9 @@
                                                     <tbody>
                                                         <{ range $if, $f := $item.Request.Body.FormData }>
                                                         <tr>
-                                                            <td><{ $f.Key | e }></td>
-                                                            <td><{ $f.Value | e }></td>
-                                                            <td><{ $f.Description | markdown | e | html }></td>
+                                                            <td><{ $f.Key | FilaEnv }></td>
+                                                            <td><{ $f.Value | FilaEnv }></td>
+                                                            <td><{ $f.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                         </tr>
                                                         <{ end }>
                                                     </tbody>
@@ -232,9 +232,9 @@
                                                     <tbody>
                                                         <{ range $iu, $u := $item.Request.Body.URLEncoded }>
                                                         <tr>
-                                                            <td><{ $u.Key | e }></td>
-                                                            <td><{ $u.Value | e }></td>
-                                                            <td><{ $u.Description | markdown | e | html }></td>
+                                                            <td><{ $u.Key | FilaEnv }></td>
+                                                            <td><{ $u.Value | FilaEnv }></td>
+                                                            <td><{ $u.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                         </tr>
                                                         <{ end }>
                                                     </tbody>
@@ -248,7 +248,7 @@
                                                     <option value="">Select Example Request/Response</option>
                                                     <{ range $ir, $resp := $item.Responses }>
                                                     <option
-                                                        value="req_res_<{ $d.Name | snake }>_<{ $item.Name | snake }>_<{ $ir }>_<{ $resp.Name | snake }>">
+                                                        value="req_res_<{ $d.Name | FilaChangeCaseSnake }>_<{ $item.Name | FilaChangeCaseSnake }>_<{ $ir }>_<{ $resp.Name | FilaChangeCaseSnake }>">
                                                         <{ $resp.Name }></option>
                                                     <{ end }>
                                                 </select>
@@ -256,12 +256,12 @@
                                                 <!-- Iterate responses -->
                                                 <{ range $ir, $resp := $item.Responses }>
                                                 <section
-                                                    id="req_res_<{ $d.Name | snake }>_<{ $item.Name | snake }>_<{ $ir }>_<{ $resp.Name | snake }>"
+                                                    id="req_res_<{ $d.Name | FilaChangeCaseSnake }>_<{ $item.Name | FilaChangeCaseSnake }>_<{ $ir }>_<{ $resp.Name | FilaChangeCaseSnake }>"
                                                     style="display: none">
 
                                                     <{ if $resp.Name }>
                                                     <h4>Example Request</h4>
-                                                    <h5>URL: <{ $resp.OriginalRequest.URL.Raw | e }></h5>
+                                                    <h5>URL: <{ $resp.OriginalRequest.URL.Raw | FilaEnv }></h5>
 
                                                     <{ if $resp.OriginalRequest.Headers }>
                                                     <h5 class="label label-warning">Headers</h5>
@@ -276,9 +276,9 @@
                                                         <tbody>
                                                             <{ range $ih, $h := $resp.OriginalRequest.Headers }>
                                                             <tr>
-                                                                <td><{ $h.Key | e }></td>
-                                                                <td><{ $h.Value | e }></td>
-                                                                <td><{ $h.Description | markdown | e | html }></td>
+                                                                <td><{ $h.Key | FilaEnv }></td>
+                                                                <td><{ $h.Value | FilaEnv }></td>
+                                                                <td><{ $h.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                             </tr>
                                                             <{ end }>
                                                         </tbody>
@@ -298,9 +298,9 @@
                                                         <tbody>
                                                             <{ range $ih, $h := $resp.OriginalRequest.URL.Query }>
                                                             <tr>
-                                                                <td><{ $h.Key | e }></td>
-                                                                <td><{ $h.Value | e }></td>
-                                                                <td><{ $h.Description | markdown | e | html }></td>
+                                                                <td><{ $h.Key | FilaEnv }></td>
+                                                                <td><{ $h.Value | FilaEnv }></td>
+                                                                <td><{ $h.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                             </tr>
                                                             <{ end }>
                                                         </tbody>
@@ -320,9 +320,9 @@
                                                         <tbody>
                                                             <{ range $iq, $q := $resp.OriginalRequest.URL.Variables }>
                                                             <tr>
-                                                                <td><{ $q.Key | e }></td>
-                                                                <td><{ $q.Value | e }></td>
-                                                                <td><{ $q.Description | markdown | e | html }></td>
+                                                                <td><{ $q.Key | FilaEnv }></td>
+                                                                <td><{ $q.Value | FilaEnv }></td>
+                                                                <td><{ $q.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                             </tr>
                                                             <{ end }>
                                                         </tbody>
@@ -334,7 +334,7 @@
                                                     <h5 class="label label-primary">Body</h5>
                                                     <{ if ne $resp.OriginalRequest.Body.Raw ""}>
                                                     <span class="resp-prettyprint">
-                                                        <{ $resp.OriginalRequest.Body.Raw | eHTML }>
+                                                        <{ $resp.OriginalRequest.Body.Raw | FilaEscapeHTML }>
                                                     </span>
                                                     <div class="clearfix"></div>
                                                     <{ end }>
@@ -353,9 +353,9 @@
                                                         <tbody>
                                                             <{ range $iu, $u := $resp.OriginalRequest.Body.FormData }>
                                                             <tr>
-                                                                <td><{ $u.Key | e }></td>
-                                                                <td><{ $u.Value | e }></td>
-                                                                <td><{ $u.Description | markdown | e | html }></td>
+                                                                <td><{ $u.Key | FilaEnv }></td>
+                                                                <td><{ $u.Value | FilaEnv }></td>
+                                                                <td><{ $u.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                             </tr>
                                                             <{ end }>
                                                         </tbody>
@@ -375,9 +375,9 @@
                                                         <tbody>
                                                             <{ range $iu, $u := $resp.OriginalRequest.Body.URLEncoded }>
                                                             <tr>
-                                                                <td><{ $u.Key | e }></td>
-                                                                <td><{ $u.Value | e }></td>
-                                                                <td><{ $u.Description | markdown | e | html }></td>
+                                                                <td><{ $u.Key | FilaEnv }></td>
+                                                                <td><{ $u.Value | FilaEnv }></td>
+                                                                <td><{ $u.Description | FilaBuildMarkdown | FilaEnv | FilaSanitizeHTML }></td>
                                                             </tr>
                                                             <{ end }>
                                                         </tbody>
@@ -391,7 +391,7 @@
                                                     <{ if $resp.Body }>
                                                     <h5 class="label label-success">Body</h5>
                                                     <span class="resp-prettyprint">
-                                                        <{ $resp.Body | eHTML }>
+                                                        <{ $resp.Body | FilaEscapeHTML }>
                                                     </span>
                                                     <div class="clearfix"></div>
                                                     <h5 class="label label-info">Code:</h5>
@@ -479,7 +479,7 @@ function escapeHtml(e){var t={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'"
             <span data-toggle="tooltip"
                 title="If the application help you, please feel free to give a star to the project in github. Your star inspire me to work more on open-source projects like this!">Made
                 with <em class="love-color">&#9829;</em> by <a href="https://github.com/avrebarra" target="_blank"
-                    class="text-muted">avrebarra</a> | Generated at: <{date_time}> by <a
+                    class="text-muted">avrebarra</a> | Generated at: <{FilaDateTime}> by <a
                     href="https://github.com/avrebarra/filateli" target="_blank" class="text-muted">filateli</a></span>
         </div>
     </div>

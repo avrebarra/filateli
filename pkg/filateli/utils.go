@@ -15,11 +15,11 @@ import (
 	"gopkg.in/russross/blackfriday.v2"
 )
 
-func eHTML(s string) string {
+func HTMLEscape(s string) string {
 	return html.EscapeString(s)
 }
 
-func htmlTemplate(v string) template.HTML {
+func HTMLSanitize(v string) template.HTML {
 	return template.HTML(v)
 }
 
@@ -31,7 +31,7 @@ func jsTemplate(v string) template.JS {
 	return template.JS(v)
 }
 
-func snake(v string) string {
+func formatSnakeCase(v string) string {
 
 	reg, err := regexp.Compile("[^a-zA-Z0-9%]+")
 	resURI := url.QueryEscape(v)
@@ -44,14 +44,14 @@ func snake(v string) string {
 	return result
 }
 
-func trimQueryParams(v string) string {
+func formatURLTrimQueryParams(v string) string {
 	if strings.Contains(v, "?") {
 		return strings.Split(v, "?")[0]
 	}
 	return v
 }
 
-func addOne(v int) string {
+func incrementOne(v int) string {
 	return strconv.Itoa(v + 1)
 }
 
@@ -92,15 +92,15 @@ func merge(v1 int, v2 string) string {
 	return strconv.Itoa(v1+1) + ". " + v2
 }
 
-func markdown(v string) string {
+func buildMarkdown(v string) string {
 	return string(blackfriday.Run([]byte(v)))
 }
 
-func dateTime() string {
+func formatDateTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
-func color(v string) string {
+func colorOfVerb(v string) string {
 	switch v {
 	case "GET":
 		return "info"
@@ -153,7 +153,7 @@ func roman(num string) string {
 // provide env values
 var envCollection postman.Environment
 
-func e(key string) string {
+func envvar(key string) string {
 	for _, k := range envCollection.Values {
 		key = strings.ReplaceAll(key, fmt.Sprintf("{{%s}}", k.Key), k.Value)
 	}

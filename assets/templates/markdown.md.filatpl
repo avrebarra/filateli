@@ -1,6 +1,6 @@
 <!--- Collection name and description -->
 <{if .Data.Info.Name -}>
-# <{ .Data.Info.Name | trim }>
+# <{ .Data.Info.Name | FilaTrim }>
 <{ end }>
 <{ if .Data.Info.Description }>
 <{- .Data.Info.Description -}>
@@ -9,9 +9,9 @@
 <!--- Request items indices -->
 ## Indices
 <{ range $index, $c := .Data.Items }>
-* [<{ $c.Name | trim }>](#<{ $c.Name | trim | glink }>)
+* [<{ $c.Name | FilaTrim }>](#<{ $c.Name | FilaTrim | FilaGetGithubLink }>)
 <{ range $i, $item := $c.Items }>
-  * [<{ $item.Name | trim }>](#<{ merge $i $item.Name | trim | glink | glinkInc }>)
+  * [<{ $item.Name | FilaTrim }>](#<{ FilaMerge $i $item.Name | FilaTrim | FilaGetGithubLink | FilaGithubLinkIncrementer }>)
 <{- end }>
 <{ end }>
 
@@ -19,13 +19,13 @@
 <!--- Iterate main collection -->
 
 <{ range $di, $d := .Data.Items }>
-## <{ $d.Name | trim  }>
+## <{ $d.Name | FilaTrim  }>
 <{ $d.Description }>
 
 <!--- Iterate collection items -->
 
 <{ range $ii, $item := $d.Items }>
-### <{ $ii | addOne }>. <{ if $item.Name }><{ $item.Name | trim }><{ end }>
+### <{ $ii | FilaIncrement }>. <{ if $item.Name }><{ $item.Name | FilaTrim }><{ end }>
 
 <{ if $item.Request.Description }>
 <{ $item.Request.Description }>
@@ -34,9 +34,9 @@
 ***Endpoint:***
 
 ```bash
-Method: <{ $item.Request.Method | upper }>
-Type: <{ $item.Request.Body.Mode | upper }>
-URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
+Method: <{ $item.Request.Method | FilaUpper }>
+Type: <{ $item.Request.Body.Mode | FilaUpper }>
+URL: <{ $item.Request.URL.Raw | FilaURLTrimQueryParams | FilaEnv }>
 ```
 
 <!--- headers items -->
@@ -47,7 +47,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $ih, $h := $item.Request.Headers -}>
-| <{ $h.Key | e }> | <{ $h.Value | e }> | <{ $h.Description | e }> |
+| <{ $h.Key | FilaEnv }> | <{ $h.Value | FilaEnv }> | <{ $h.Description | FilaEnv }> |
 <{ end }>
 <!--- End Iterate headers items -->
 
@@ -62,7 +62,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $iq, $q := $item.Request.URL.Query -}>
-| <{ $q.Key | e }> | <{ $q.Value | e }> | <{ $q.Description | e }> |
+| <{ $q.Key | FilaEnv }> | <{ $q.Value | FilaEnv }> | <{ $q.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <!--- End query param items -->
@@ -75,7 +75,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $iq, $q := $item.Request.URL.Variables -}>
-| <{ $q.Key | e }> | <{ $q.Value | e }> | <{ $q.Description | e }> |
+| <{ $q.Key | FilaEnv }> | <{ $q.Value | FilaEnv }> | <{ $q.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <!--- End URL variables items -->
@@ -103,7 +103,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $if, $f := $item.Request.Body.FormData -}>
-| <{ $f.Key | e }> | <{ $f.Value | e }> | <{ $f.Description | e }> |
+| <{ $f.Key | FilaEnv }> | <{ $f.Value | FilaEnv }> | <{ $f.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <{ end }>
@@ -118,7 +118,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $iu, $u := $item.Request.Body.URLEncoded -}>
-| <{ $u.Key | e }> | <{ $u.Value | e }> | <{ $u.Description | e }> |
+| <{ $u.Key | FilaEnv }> | <{ $u.Value | FilaEnv }> | <{ $u.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <{ end }>
@@ -132,7 +132,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 ***More example Requests/Responses:***
 <{ range $ir, $resp := $item.Responses }>
 <{ if $resp.Name }>
-##### <{ $ir | addOne | roman }>. Example Request: <{ $resp.Name }>
+##### <{ $ir | FilaIncrement | FilaRoman }>. Example Request: <{ $resp.Name }>
 
 <!--- headers items -->
 <{ if $resp.OriginalRequest.Headers }>
@@ -142,7 +142,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $ih, $h := $resp.OriginalRequest.Headers -}>
-| <{ $h.Key | e }> | <{ $h.Value | e }> | <{ $h.Description | e }> |
+| <{ $h.Key | FilaEnv }> | <{ $h.Value | FilaEnv }> | <{ $h.Description | FilaEnv }> |
 <{ end }>
 <!--- End Iterate headers items -->
 
@@ -158,7 +158,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $ih, $h := $resp.OriginalRequest.URL.Query -}>
-| <{ $h.Key | e }> | <{ $h.Value | e }> | <{ $h.Description | e }> |
+| <{ $h.Key | FilaEnv }> | <{ $h.Value | FilaEnv }> | <{ $h.Description | FilaEnv }> |
 <{ end }>
 <!--- End Iterate query items -->
 
@@ -173,7 +173,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $ih, $h := $resp.OriginalRequest.URL.Variables -}>
-| <{ $h.Key | e }> | <{ $h.Value | e }> | <{ $h.Description | e }> |
+| <{ $h.Key | FilaEnv }> | <{ $h.Value | FilaEnv }> | <{ $h.Description | FilaEnv }> |
 <{ end }>
 <!--- End Iterate url variable items -->
 
@@ -203,7 +203,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $if, $f := $resp.OriginalRequest.Body.FormData -}>
-| <{ $f.Key | e }> | <{ $f.Value | e }> | <{ $f.Description | e }> |
+| <{ $f.Key | FilaEnv }> | <{ $f.Value | FilaEnv }> | <{ $f.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <{ end }>
@@ -218,7 +218,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 | Key | Value | Description |
 | --- | ------|-------------|
 <{ range $iu, $u := $resp.OriginalRequest.Body.URLEncoded -}>
-| <{ $u.Key | e }> | <{ $u.Value | e }> | <{ $u.Description | e }> |
+| <{ $u.Key | FilaEnv }> | <{ $u.Value | FilaEnv }> | <{ $u.Description | FilaEnv }> |
 <{ end }>
 <{ end }>
 <{ end }>
@@ -228,7 +228,7 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 <{ end }>
 
 <{ if $resp.Body }>
-##### <{ $ir | addOne | roman }>. Example Response: <{ $resp.Name }>
+##### <{ $ir | FilaIncrement | FilaRoman }>. Example Response: <{ $resp.Name }>
 ```js
 <{ $resp.Body }>
 ```
@@ -269,5 +269,5 @@ URL: <{ $item.Request.URL.Raw | trimQueryParams | e }>
 <{ end }>
 
 ---
-[Back to top](#<{ .Data.Info.Name | trim | glink }>)
-> Generated (with &#9829;) at: <{date_time}> using [filateli](https://github.com/avrebarra/filateli)
+[Back to top](#<{ .Data.Info.Name | FilaTrim | FilaGetGithubLink }>)
+> Generated (with &#9829;) at: <{FilaDateTime}> using [filateli](https://github.com/avrebarra/filateli)

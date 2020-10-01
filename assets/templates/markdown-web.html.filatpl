@@ -42,7 +42,7 @@
    </head>
    <body>
       <article class="markdown-body">
-         <{ .MarkdownHTML | html }>
+         <{ .MarkdownHTML | FilaSanitizeHTML }>
       </article>
    </body>
 </html>

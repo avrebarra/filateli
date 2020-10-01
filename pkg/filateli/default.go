@@ -32,15 +32,15 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, lite bool) (buf *by
 	tm := template.New("main")
 	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
-		"html":            htmlTemplate,
-		"eHTML":           eHTML,
-		"snake":           snake,
-		"addOne":          addOne,
-		"color":           color,
-		"trimQueryParams": trimQueryParams,
-		"date_time":       dateTime,
-		"markdown":        markdown,
-		"e":               e,
+		"FilaSanitizeHTML":            HTMLSanitize,
+		"FilaEscapeHTML":              HTMLEscape,
+		"FilaChangeCaseSnake":         formatSnakeCase,
+		"FilaIncrement":               incrementOne,
+		"FilaTemplateHTMLColorOfVerb": colorOfVerb,
+		"FilaURLTrimQueryParams":      formatURLTrimQueryParams,
+		"FilaDateTime":                formatDateTime,
+		"FilaBuildMarkdown":           buildMarkdown,
+		"FilaEnv":                     envvar,
 	})
 
 	base := s.BuiltinTemplateHTML
@@ -77,18 +77,18 @@ func (s *DefaultService) ConvertToMarkdown(c postman.Collection) (buf *bytes.Buf
 	tm := template.New("main")
 	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
-		"snake":           snake,
-		"addOne":          addOne,
-		"trim":            trim,
-		"lower":           lower,
-		"upper":           upper,
-		"glink":           githubLink,
-		"glinkInc":        githubLinkIncrementer,
-		"merge":           merge,
-		"roman":           roman,
-		"date_time":       dateTime,
-		"trimQueryParams": trimQueryParams,
-		"e":               e,
+		"FilaChangeCaseSnake":       formatSnakeCase,
+		"FilaDateTime":              formatDateTime,
+		"FilaEnv":                   envvar,
+		"FilaIncrement":             incrementOne,
+		"FilaURLTrimQueryParams":    formatURLTrimQueryParams,
+		"FilaGithubLinkIncrementer": githubLinkIncrementer,
+		"FilaGetGithubLink":         githubLink,
+		"FilaLower":                 lower,
+		"FilaMerge":                 merge,
+		"FilaRoman":                 roman,
+		"FilaTrim":                  trim,
+		"FilaUpper":                 upper,
 	})
 	t, err := tm.Parse(s.BuiltinTemplateMarkdown)
 	if err != nil {
@@ -116,17 +116,15 @@ func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection) (buf *bytes
 	tm := template.New("main")
 	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
-		"html":            htmlTemplate,
-		"css":             cssTemplate,
-		"js":              jsTemplate,
-		"eHTML":           eHTML,
-		"snake":           snake,
-		"addOne":          addOne,
-		"color":           color,
-		"trimQueryParams": trimQueryParams,
-		"date_time":       dateTime,
-		"markdown":        markdown,
-		"e":               e,
+		"FilaSanitizeHTML":            HTMLSanitize,
+		"FilaEscapeHTML":              HTMLEscape,
+		"FilaChangeCaseSnake":         formatSnakeCase,
+		"FilaIncrement":               incrementOne,
+		"FilaTemplateHTMLColorOfVerb": colorOfVerb,
+		"FilaURLTrimQueryParams":      formatURLTrimQueryParams,
+		"FilaDateTime":                formatDateTime,
+		"FilaBuildMarkdown":           buildMarkdown,
+		"FilaEnv":                     envvar,
 	})
 
 	t, err := tm.Parse(s.BuiltinTemplateMarkdownHTML)
@@ -135,7 +133,7 @@ func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection) (buf *bytes
 	}
 
 	buf, err = s.ConvertToMarkdown(c)
-	mdHTML := markdown(buf.String())
+	mdHTML := buildMarkdown(buf.String())
 
 	data := struct {
 		Assets       Config
