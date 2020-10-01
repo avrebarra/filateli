@@ -1,4 +1,4 @@
-//go:generate go run generate_asset.go
+//go:generate go run generate_storage.go
 
 package main
 

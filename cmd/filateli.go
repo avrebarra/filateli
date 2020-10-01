@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/avrebarra/filateli/pkg/filateli"
-	"github.com/avrebarra/filateli/storage"
+	storeassets "github.com/avrebarra/filateli/storage/assets"
 	"github.com/spf13/cobra"
 )
 
@@ -67,7 +67,7 @@ func handle(message string, err error) {
 }
 
 func readFileFromStorage(a string) string {
-	fp, err := storage.AssetFS.Open(a)
+	fp, err := storeassets.AssetFS.Open(a)
 	if err != nil {
 		log.Fatal(err)
 	}

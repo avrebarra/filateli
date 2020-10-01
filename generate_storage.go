@@ -1,4 +1,4 @@
-// +build generateasset
+// +build generatestorage
 
 package main
 
@@ -10,10 +10,11 @@ import (
 )
 
 func main() {
+	// from assets
 	var fs http.FileSystem = http.Dir("./assets/")
 	err := vfsgen.Generate(fs, vfsgen.Options{
-		Filename:     "./storage/storage.go",
-		PackageName:  "storage",
+		Filename:     "./storage/assets/store.go",
+		PackageName:  "assets",
 		VariableName: "AssetFS",
 	})
 	if err != nil {
