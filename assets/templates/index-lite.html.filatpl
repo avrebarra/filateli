@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>
-        @{{ if .Data.Info.Name }}@
-        @{{ .Data.Info.Name | e }}@
-        @{{ end }}@
-        @{{ if .Data.Info.Description }}@
+        <{ if .Data.Info.Name }>
+        <{ .Data.Info.Name | e }>
+        <{ end }>
+        <{ if .Data.Info.Description }>
         &nbsp;|&nbsp;
-        @{{ .Data.Info.Description }}@
-        @{{ end }}@
+        <{ .Data.Info.Description }>
+        <{ end }>
     </title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -36,9 +36,9 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
         <div class="row">
             <!-- introduction -->
             <div class="col-md-12 collection-intro">
-                <h3>@{{ .Data.Info.Name }}@</h3>
+                <h3><{ .Data.Info.Name }></h3>
                 <p>
-                    @{{ .Data.Info.Description | markdown | e | html }}@
+                    <{ .Data.Info.Description | markdown | e | html }>
                 </p>
             </div>
             <!-- end introduction -->
@@ -46,75 +46,75 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                 <!-- left sidebar index -->
                 <div class="col-md-3">
                     <ul>
-                        @{{ range $index, $c := .Data.Items }}@
+                        <{ range $index, $c := .Data.Items }>
                         <li>
-                            <strong><a href="#@{{ $c.Name | snake }}@">@{{ $c.Name }}@</a></strong>
+                            <strong><a href="#<{ $c.Name | snake }>"><{ $c.Name }></a></strong>
                             <ul>
-                                @{{ range $i, $item := $c.Items }}@
+                                <{ range $i, $item := $c.Items }>
                                 <li><a class="endpoint_menu"
-                                        href="#jump-@{{ $c.Name | snake }}@-@{{ $item.Name | snake }}@">@{{ $item.Name }}@</a>
+                                        href="#jump-<{ $c.Name | snake }>-<{ $item.Name | snake }>"><{ $item.Name }></a>
                                 </li>
-                                @{{ end }}@
+                                <{ end }>
                             </ul>
                         </li>
-                        @{{ end }}@
+                        <{ end }>
                     </ul>
                 </div>
                 <!-- end left sidebar index -->
                 <!-- main div to display items -->
                 <div class="col-md-9">
                     <!-- directory -->
-                    @{{ range $di, $d := .Data.Items }}@
+                    <{ range $di, $d := .Data.Items }>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title" id="@{{ $d.Name | snake }}@">
-                                @{{ $d.Name }}@
-                                <span class="badge">@{{ len $d.Items }}@</span>
+                            <h3 class="panel-title" id="<{ $d.Name | snake }>">
+                                <{ $d.Name }>
+                                <span class="badge"><{ len $d.Items }></span>
                             </h3>
                         </div>
                         <div class="panel-body">
                             <p>
-                                @{{ $d.Description | markdown | e | html }}@
+                                <{ $d.Description | markdown | e | html }>
                             </p>
                             <div class="request-item">
-                                <div class="panel-group" id="accordion-@{{ $d.Name | snake }}@">
+                                <div class="panel-group" id="accordion-<{ $d.Name | snake }>">
                                     <!-- single request item -->
-                                    @{{ range $ii, $item := $d.Items }}@
-                                    <div class="panel panel-@{{ $item.Request.Method | color }}@"
-                                        id="jump-@{{ $d.Name | snake }}@-@{{ $item.Name | snake }}@">
+                                    <{ range $ii, $item := $d.Items }>
+                                    <div class="panel panel-<{ $item.Request.Method | color }>"
+                                        id="jump-<{ $d.Name | snake }>-<{ $item.Name | snake }>">
                                         <div class="panel-heading">
                                             <small class="pull-right text-muted">
-                                                @{{ $item.Request.Body.Mode }}@
+                                                <{ $item.Request.Body.Mode }>
                                             </small>
-                                            <a class="text-@{{ $item.Request.Method | color }}@" data-toggle="collapse"
-                                                data-parent="#accordion-@{{ $d.Name | snake }}@"
-                                                href="#collapse-@{{ $d.Name | snake }}@-@{{ $item.Name | snake }}@">
+                                            <a class="text-<{ $item.Request.Method | color }>" data-toggle="collapse"
+                                                data-parent="#accordion-<{ $d.Name | snake }>"
+                                                href="#collapse-<{ $d.Name | snake }>-<{ $item.Name | snake }>">
                                                 <h4 class="panel-title">
                                                     <span class="glyphicon glyphicon-plus"></span>
-                                                    @{{ if $item.Name }}@
-                                                    <strong>@{{ $item.Name }}@</strong> &nbsp;|&nbsp;
-                                                    @{{ end }}@
+                                                    <{ if $item.Name }>
+                                                    <strong><{ $item.Name }></strong> &nbsp;|&nbsp;
+                                                    <{ end }>
                                                     <strong
-                                                        class="request-method border-@{{ $item.Request.Method | color }}@">
-                                                        @{{ $item.Request.Method }}@
+                                                        class="request-method border-<{ $item.Request.Method | color }>">
+                                                        <{ $item.Request.Method }>
                                                     </strong>
                                                     &nbsp;
-                                                    @{{ $item.Request.URL.Raw | trimQueryParams | e }}@
+                                                    <{ $item.Request.URL.Raw | trimQueryParams | e }>
                                                 </h4>
                                             </a>
                                         </div>
-                                        <div id="collapse-@{{ $d.Name | snake }}@-@{{ $item.Name | snake }}@"
+                                        <div id="collapse-<{ $d.Name | snake }>-<{ $item.Name | snake }>"
                                             class="panel-collapse collapse">
                                             <div class="panel-body">
-                                                @{{ if $item.Request.Description }}@
+                                                <{ if $item.Request.Description }>
                                                 <h5 class="label label-default">Description</h5>
                                                 <br>
                                                 <small>
-                                                    @{{ $item.Request.Description | markdown | e | html }}@
+                                                    <{ $item.Request.Description | markdown | e | html }>
                                                 </small>
                                                 <br><br>
-                                                @{{ end }}@
-                                                @{{ if $item.Request.Headers }}@
+                                                <{ end }>
+                                                <{ if $item.Request.Headers }>
                                                 <h5 class="label label-warning">Headers</h5>
                                                 <table class="table table-hover">
                                                     <thead>
@@ -125,17 +125,17 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @{{ range $ih, $h := $item.Request.Headers }}@
+                                                        <{ range $ih, $h := $item.Request.Headers }>
                                                         <tr>
-                                                            <td>@{{ $h.Key | e }}@</td>
-                                                            <td>@{{ $h.Value |e }}@</td>
-                                                            <td>@{{ $h.Description | markdown | e | html }}@</td>
+                                                            <td><{ $h.Key | e }></td>
+                                                            <td><{ $h.Value |e }></td>
+                                                            <td><{ $h.Description | markdown | e | html }></td>
                                                         </tr>
-                                                        @{{ end }}@
+                                                        <{ end }>
                                                     </tbody>
                                                 </table>
-                                                @{{ end }}@
-                                                @{{ if $item.Request.URL.Query }}@
+                                                <{ end }>
+                                                <{ if $item.Request.URL.Query }>
                                                 <h5 class="label label-info">Query</h5>
                                                 <table class="table table-hover">
                                                     <thead>
@@ -146,17 +146,17 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @{{ range $iq, $q := $item.Request.URL.Query }}@
+                                                        <{ range $iq, $q := $item.Request.URL.Query }>
                                                         <tr>
-                                                            <td>@{{ $q.Key | e }}@</td>
-                                                            <td>@{{ $q.Value | e }}@</td>
-                                                            <td>@{{ $q.Description | markdown | e | html }}@</td>
+                                                            <td><{ $q.Key | e }></td>
+                                                            <td><{ $q.Value | e }></td>
+                                                            <td><{ $q.Description | markdown | e | html }></td>
                                                         </tr>
-                                                        @{{ end }}@
+                                                        <{ end }>
                                                     </tbody>
                                                 </table>
-                                                @{{ end }}@
-                                                @{{ if $item.Request.URL.Variables }}@
+                                                <{ end }>
+                                                <{ if $item.Request.URL.Variables }>
                                                 <h5 class="label label-info">URL Variables</h5>
                                                 <table class="table table-hover">
                                                     <thead>
@@ -167,33 +167,33 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @{{ range $iq, $q := $item.Request.URL.Variables }}@
+                                                        <{ range $iq, $q := $item.Request.URL.Variables }>
                                                         <tr>
-                                                            <td>@{{ $q.Key | e }}@</td>
-                                                            <td>@{{ $q.Value | e }}@</td>
-                                                            <td>@{{ $q.Description | markdown | e | html }}@</td>
+                                                            <td><{ $q.Key | e }></td>
+                                                            <td><{ $q.Value | e }></td>
+                                                            <td><{ $q.Description | markdown | e | html }></td>
                                                         </tr>
-                                                        @{{ end }}@
+                                                        <{ end }>
                                                     </tbody>
                                                 </table>
-                                                @{{ end }}@
+                                                <{ end }>
 
-                                                @{{ if $item.Request.Body.Mode}}@
-                                                @{{ if eq $item.Request.Body.Mode "raw"}}@
-                                                @{{ if $item.Request.Body.Raw }}@
+                                                <{ if $item.Request.Body.Mode}>
+                                                <{ if eq $item.Request.Body.Mode "raw"}>
+                                                <{ if $item.Request.Body.Raw }>
                                                 <h5 class="label label-primary">Body</h5>
                                                 <span class="resp-prettyprint">
-                                                    @{{ $item.Request.Body.Raw | eHTML }}@
+                                                    <{ $item.Request.Body.Raw | eHTML }>
                                                 </span>
                                                 <div class="clearfix"></div>
-                                                @{{ end }}@
-                                                @{{ end }}@
-                                                @{{ end }}@
+                                                <{ end }>
+                                                <{ end }>
+                                                <{ end }>
 
-                                                @{{ if $item.Request.Body.Mode}}@
-                                                @{{ if eq $item.Request.Body.Mode "formdata"}}@
+                                                <{ if $item.Request.Body.Mode}>
+                                                <{ if eq $item.Request.Body.Mode "formdata"}>
                                                 <h5 class="label label-primary">Body</h5>
-                                                @{{ if $item.Request.Body.FormData }}@
+                                                <{ if $item.Request.Body.FormData }>
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
@@ -203,23 +203,23 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @{{ range $if, $f := $item.Request.Body.FormData }}@
+                                                        <{ range $if, $f := $item.Request.Body.FormData }>
                                                         <tr>
-                                                            <td>@{{ $f.Key | e }}@</td>
-                                                            <td>@{{ $f.Value | e }}@</td>
-                                                            <td>@{{ $f.Description | markdown | e | html }}@</td>
+                                                            <td><{ $f.Key | e }></td>
+                                                            <td><{ $f.Value | e }></td>
+                                                            <td><{ $f.Description | markdown | e | html }></td>
                                                         </tr>
-                                                        @{{ end }}@
+                                                        <{ end }>
                                                     </tbody>
                                                 </table>
-                                                @{{ end }}@
-                                                @{{ end }}@
-                                                @{{ end }}@
+                                                <{ end }>
+                                                <{ end }>
+                                                <{ end }>
 
-                                                @{{ if $item.Request.Body.Mode}}@
-                                                @{{ if eq $item.Request.Body.Mode "urlencoded"}}@
+                                                <{ if $item.Request.Body.Mode}>
+                                                <{ if eq $item.Request.Body.Mode "urlencoded"}>
                                                 <h5 class="label label-primary">Body</h5>
-                                                @{{ if $item.Request.Body.URLEncoded }}@
+                                                <{ if $item.Request.Body.URLEncoded }>
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
@@ -229,40 +229,40 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @{{ range $iu, $u := $item.Request.Body.URLEncoded }}@
+                                                        <{ range $iu, $u := $item.Request.Body.URLEncoded }>
                                                         <tr>
-                                                            <td>@{{ $u.Key | e }}@</td>
-                                                            <td>@{{ $u.Value | e }}@</td>
-                                                            <td>@{{ $u.Description | markdown | e | html }}@</td>
+                                                            <td><{ $u.Key | e }></td>
+                                                            <td><{ $u.Value | e }></td>
+                                                            <td><{ $u.Description | markdown | e | html }></td>
                                                         </tr>
-                                                        @{{ end }}@
+                                                        <{ end }>
                                                     </tbody>
                                                 </table>
-                                                @{{ end }}@
-                                                @{{ end }}@
-                                                @{{ end }}@
+                                                <{ end }>
+                                                <{ end }>
+                                                <{ end }>
 
-                                                @{{ if $item.Responses }}@
+                                                <{ if $item.Responses }>
                                                 <select class="resp-selector">
                                                     <option value="">Select Example Request/Response</option>
-                                                    @{{ range $ir, $resp := $item.Responses }}@
+                                                    <{ range $ir, $resp := $item.Responses }>
                                                     <option
-                                                        value="req_res_@{{ $d.Name | snake }}@_@{{ $item.Name | snake }}@_@{{ $ir }}@_@{{ $resp.Name | snake }}@">
-                                                        @{{ $resp.Name }}@</option>
-                                                    @{{ end }}@
+                                                        value="req_res_<{ $d.Name | snake }>_<{ $item.Name | snake }>_<{ $ir }>_<{ $resp.Name | snake }>">
+                                                        <{ $resp.Name }></option>
+                                                    <{ end }>
                                                 </select>
                                                 <br>
                                                 <!-- Iterate responses -->
-                                                @{{ range $ir, $resp := $item.Responses }}@
+                                                <{ range $ir, $resp := $item.Responses }>
                                                 <section
-                                                    id="req_res_@{{ $d.Name | snake }}@_@{{ $item.Name | snake }}@_@{{ $ir }}@_@{{ $resp.Name | snake }}@"
+                                                    id="req_res_<{ $d.Name | snake }>_<{ $item.Name | snake }>_<{ $ir }>_<{ $resp.Name | snake }>"
                                                     style="display: none">
 
-                                                    @{{ if $resp.Name }}@
+                                                    <{ if $resp.Name }>
                                                     <h4>Example Request</h4>
-                                                    <h5>URL: @{{ $resp.OriginalRequest.URL.Raw | e }}@</h5>
+                                                    <h5>URL: <{ $resp.OriginalRequest.URL.Raw | e }></h5>
 
-                                                    @{{ if $resp.OriginalRequest.Headers }}@
+                                                    <{ if $resp.OriginalRequest.Headers }>
                                                     <h5 class="label label-warning">Headers</h5>
                                                     <table class="table table-hover">
                                                         <thead>
@@ -273,18 +273,18 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @{{ range $ih, $h := $resp.OriginalRequest.Headers }}@
+                                                            <{ range $ih, $h := $resp.OriginalRequest.Headers }>
                                                             <tr>
-                                                                <td>@{{ $h.Key | e }}@</td>
-                                                                <td>@{{ $h.Value | e }}@</td>
-                                                                <td>@{{ $h.Description | markdown | e | html }}@</td>
+                                                                <td><{ $h.Key | e }></td>
+                                                                <td><{ $h.Value | e }></td>
+                                                                <td><{ $h.Description | markdown | e | html }></td>
                                                             </tr>
-                                                            @{{ end }}@
+                                                            <{ end }>
                                                         </tbody>
                                                     </table>
-                                                    @{{ end }}@
+                                                    <{ end }>
 
-                                                    @{{ if $resp.OriginalRequest.URL.Query }}@
+                                                    <{ if $resp.OriginalRequest.URL.Query }>
                                                     <h5 class="label label-info">Query</h5>
                                                     <table class="table table-hover">
                                                         <thead>
@@ -295,18 +295,18 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @{{ range $ih, $h := $resp.OriginalRequest.URL.Query }}@
+                                                            <{ range $ih, $h := $resp.OriginalRequest.URL.Query }>
                                                             <tr>
-                                                                <td>@{{ $h.Key | e }}@</td>
-                                                                <td>@{{ $h.Value | e }}@</td>
-                                                                <td>@{{ $h.Description | markdown | e | html }}@</td>
+                                                                <td><{ $h.Key | e }></td>
+                                                                <td><{ $h.Value | e }></td>
+                                                                <td><{ $h.Description | markdown | e | html }></td>
                                                             </tr>
-                                                            @{{ end }}@
+                                                            <{ end }>
                                                         </tbody>
                                                     </table>
-                                                    @{{ end }}@
+                                                    <{ end }>
 
-                                                    @{{ if $resp.OriginalRequest.URL.Variables }}@
+                                                    <{ if $resp.OriginalRequest.URL.Variables }>
                                                     <h5 class="label label-info">URL Variables</h5>
                                                     <table class="table table-hover">
                                                         <thead>
@@ -317,29 +317,29 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @{{ range $iq, $q := $resp.OriginalRequest.URL.Variables }}@
+                                                            <{ range $iq, $q := $resp.OriginalRequest.URL.Variables }>
                                                             <tr>
-                                                                <td>@{{ $q.Key | e }}@</td>
-                                                                <td>@{{ $q.Value | e }}@</td>
-                                                                <td>@{{ $q.Description | markdown | e | html }}@</td>
+                                                                <td><{ $q.Key | e }></td>
+                                                                <td><{ $q.Value | e }></td>
+                                                                <td><{ $q.Description | markdown | e | html }></td>
                                                             </tr>
-                                                            @{{ end }}@
+                                                            <{ end }>
                                                         </tbody>
                                                     </table>
-                                                    @{{ end }}@
+                                                    <{ end }>
 
-                                                    @{{ if $resp.OriginalRequest.Body.Mode}}@
-                                                    @{{ if eq $resp.OriginalRequest.Body.Mode "raw" }}@
+                                                    <{ if $resp.OriginalRequest.Body.Mode}>
+                                                    <{ if eq $resp.OriginalRequest.Body.Mode "raw" }>
                                                     <h5 class="label label-primary">Body</h5>
-                                                    @{{ if ne $resp.OriginalRequest.Body.Raw ""}}@
+                                                    <{ if ne $resp.OriginalRequest.Body.Raw ""}>
                                                     <span class="resp-prettyprint">
-                                                        @{{ $resp.OriginalRequest.Body.Raw | eHTML }}@
+                                                        <{ $resp.OriginalRequest.Body.Raw | eHTML }>
                                                     </span>
                                                     <div class="clearfix"></div>
-                                                    @{{ end }}@
-                                                    @{{ end }}@
+                                                    <{ end }>
+                                                    <{ end }>
 
-                                                    @{{ if eq $resp.OriginalRequest.Body.Mode "formdata" }}@
+                                                    <{ if eq $resp.OriginalRequest.Body.Mode "formdata" }>
                                                     <h5 class="label label-primary">Body</h5>
                                                     <table class="table table-hover">
                                                         <thead>
@@ -350,18 +350,18 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @{{ range $iu, $u := $resp.OriginalRequest.Body.FormData }}@
+                                                            <{ range $iu, $u := $resp.OriginalRequest.Body.FormData }>
                                                             <tr>
-                                                                <td>@{{ $u.Key | e }}@</td>
-                                                                <td>@{{ $u.Value | e }}@</td>
-                                                                <td>@{{ $u.Description | markdown | e | html }}@</td>
+                                                                <td><{ $u.Key | e }></td>
+                                                                <td><{ $u.Value | e }></td>
+                                                                <td><{ $u.Description | markdown | e | html }></td>
                                                             </tr>
-                                                            @{{ end }}@
+                                                            <{ end }>
                                                         </tbody>
                                                     </table>
-                                                    @{{ end }}@
+                                                    <{ end }>
 
-                                                    @{{ if eq $resp.OriginalRequest.Body.Mode "urlencoded" }}@
+                                                    <{ if eq $resp.OriginalRequest.Body.Mode "urlencoded" }>
                                                     <h5 class="label label-primary">Body</h5>
                                                     <table class="table table-hover">
                                                         <thead>
@@ -372,55 +372,55 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @{{ range $iu, $u := $resp.OriginalRequest.Body.URLEncoded }}@
+                                                            <{ range $iu, $u := $resp.OriginalRequest.Body.URLEncoded }>
                                                             <tr>
-                                                                <td>@{{ $u.Key | e }}@</td>
-                                                                <td>@{{ $u.Value | e }}@</td>
-                                                                <td>@{{ $u.Description | markdown | e | html }}@</td>
+                                                                <td><{ $u.Key | e }></td>
+                                                                <td><{ $u.Value | e }></td>
+                                                                <td><{ $u.Description | markdown | e | html }></td>
                                                             </tr>
-                                                            @{{ end }}@
+                                                            <{ end }>
                                                         </tbody>
                                                     </table>
-                                                    @{{ end }}@
+                                                    <{ end }>
 
-                                                    @{{ end }}@
-                                                    @{{ end }}@
+                                                    <{ end }>
+                                                    <{ end }>
 
                                                     <h4>Example Response</h4>
-                                                    @{{ if $resp.Body }}@
+                                                    <{ if $resp.Body }>
                                                     <h5 class="label label-success">Body</h5>
                                                     <span class="resp-prettyprint">
-                                                        @{{ $resp.Body | eHTML }}@
+                                                        <{ $resp.Body | eHTML }>
                                                     </span>
                                                     <div class="clearfix"></div>
                                                     <h5 class="label label-info">Code:</h5>
-                                                    <strong>@{{ $resp.Code }}@</strong>
-                                                    @{{ end }}@
+                                                    <strong><{ $resp.Code }></strong>
+                                                    <{ end }>
 
                                                 </section>
 
-                                                @{{ end }}@
+                                                <{ end }>
                                                 <!-- Iterate responses End -->
 
-                                                @{{ end }}@
+                                                <{ end }>
                                             </div>
                                         </div>
                                     </div>
-                                    @{{ end }}@
+                                    <{ end }>
                                     <!-- end single request item -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @{{ end }}@
+                    <{ end }>
                     <!-- end directory -->
                     <!--Available Variables-->
-                    @{{ if .Data.Variables }}@
+                    <{ if .Data.Variables }>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 Available Variables
-                                <span class="badge">@{{ len .Data.Variables }}@</span>
+                                <span class="badge"><{ len .Data.Variables }></span>
                             </h3>
                         </div>
                         <div class="panel-body">
@@ -433,19 +433,19 @@ body{color:#555!important;letter-spacing:.25px!important}.panel-default>.panel-h
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{{ range $iv, $v := .Data.Variables }}@
+                                    <{ range $iv, $v := .Data.Variables }>
                                     <tr>
-                                        <td>@{{ $v.Key }}@</td>
-                                        <td>@{{ $v.Value }}@</td>
-                                        <td>@{{ $v.Type }}@</td>
+                                        <td><{ $v.Key }></td>
+                                        <td><{ $v.Value }></td>
+                                        <td><{ $v.Type }></td>
                                     </tr>
-                                    @{{ end }}@
+                                    <{ end }>
                                 </tbody>
                             </table>
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    @{{ end }}@
+                    <{ end }>
                     <!--End of Available Variables-->
                 </div>
                 <!-- end main div to display items -->
@@ -468,7 +468,7 @@ function escapeHtml(e){var t={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'"
             <span data-toggle="tooltip"
                 title="If the application help you, please feel free to give a star to the project in github. Your star inspire me to work more on open-source projects like this!">Made
                 with <em class="love-color">&#9829;</em> by <a href="https://github.com/avrebarra" target="_blank"
-                    class="text-muted">avrebarra</a> | Generated at: @{{date_time}}@ by <a
+                    class="text-muted">avrebarra</a> | Generated at: <{date_time}> by <a
                     href="https://github.com/avrebarra/filateli" target="_blank" class="text-muted">filateli</a></span>
         </div>
     </div>

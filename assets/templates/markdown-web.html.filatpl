@@ -6,13 +6,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
       <title>
-         @{{ if .Data.Info.Name }}@
-         @{{ .Data.Info.Name }}@
-         @{{ end }}@
-         @{{ if .Data.Info.Description }}@
+         <{ if .Data.Info.Name }>
+         <{ .Data.Info.Name }>
+         <{ end }>
+         <{ if .Data.Info.Description }>
          &nbsp;|&nbsp;
-         @{{ .Data.Info.Description }}@
-         @{{ end }}@
+         <{ .Data.Info.Description }>
+         <{ end }>
       </title>
       <!-- Bootstrap -->
       <style media="screen">
@@ -42,7 +42,7 @@
    </head>
    <body>
       <article class="markdown-body">
-         @{{ .MarkdownHTML | html }}@
+         <{ .MarkdownHTML | html }>
       </article>
    </body>
 </html>

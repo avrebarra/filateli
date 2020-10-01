@@ -30,7 +30,7 @@ func (s *DefaultService) ConvertToHTML(c postman.Collection, lite bool) (buf *by
 	}
 
 	tm := template.New("main")
-	tm.Delims("@{{", "}}@")
+	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
 		"html":            htmlTemplate,
 		"eHTML":           eHTML,
@@ -75,7 +75,7 @@ func (s *DefaultService) ConvertToMarkdown(c postman.Collection) (buf *bytes.Buf
 	}
 
 	tm := template.New("main")
-	tm.Delims("@{{", "}}@")
+	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
 		"snake":           snake,
 		"addOne":          addOne,
@@ -114,7 +114,7 @@ func (s *DefaultService) ConvertToMarkdownHTML(c postman.Collection) (buf *bytes
 	}
 
 	tm := template.New("main")
-	tm.Delims("@{{", "}}@")
+	tm.Delims("<{", "}>")
 	tm.Funcs(template.FuncMap{
 		"html":            htmlTemplate,
 		"css":             cssTemplate,
