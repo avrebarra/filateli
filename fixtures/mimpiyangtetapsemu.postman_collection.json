@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "4cdd6e17-5431-4adc-adee-83118b2f5168",
+		"name": "Mimpi Yang Tetap Semu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Rasa yang mengusang terusung",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://mimpi.tawa/angan/92",
+					"protocol": "http",
+					"host": [
+						"mimpi",
+						"tawa"
+					],
+					"path": [
+						"angan",
+						"92"
+					]
+				},
+				"description": "Ada rasa yang tak mau hilang. Aku takut sepi. Tapi yang lain tak berarti."
+			},
+			"response": [
+				{
+					"name": "ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://mimpi.tawa/angan/92",
+							"protocol": "http",
+							"host": [
+								"mimpi",
+								"tawa"
+							],
+							"path": [
+								"angan",
+								"92"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Response\": {\n        \"parameters\": {\n            \"responseCode\": \"0000\",\n            \"responseMessage\": \"Unknown output \",\n            \"errorMessage\": \"Unknown output\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Banyak yang masih pergi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tentang\": \"kata maaf\",\n    \"dimana\": \"semua lengkuk ilalang\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://mimpi.tawa/angan",
+					"protocol": "http",
+					"host": [
+						"mimpi",
+						"tawa"
+					],
+					"path": [
+						"angan"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://mimpi.tawa/angan/92",
+							"protocol": "http",
+							"host": [
+								"mimpi",
+								"tawa"
+							],
+							"path": [
+								"angan",
+								"92"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Response\": {\n        \"parameters\": {\n            \"responseCode\": \"0000\",\n            \"responseMessage\": \"Unknown output \",\n            \"errorMessage\": \"Unknown output\"\n        }\n    }\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
