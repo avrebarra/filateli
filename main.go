@@ -1,5 +1,3 @@
-//go:generate go run generate_storage.go
-
 package main
 
 import (
@@ -7,5 +5,6 @@ import (
 )
 
 func main() {
-	cmd.Execute()
+	cmd.Initialize()
+	cmd.Run()
 }
