@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/avrebarra/filateli/cmd"
 )
@@ -13,5 +14,6 @@ func main() {
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println("unexpected error:", err.Error())
+		os.Exit(1)
 	}
 }

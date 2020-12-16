@@ -66,6 +66,8 @@ func (c CommandBuild) Run() (err error) {
 		return
 	}
 
+	c.Log(fmt.Sprintf("collection %s written to %s", c.config.SourcePath, c.config.OutputPath))
+
 	return nil
 }
 

@@ -11,35 +11,20 @@
 package templates
 
 //line templater/templates/simple.qtpl:6
-import "hash/fnv"
-
-//line templater/templates/simple.qtpl:7
-import "fmt"
-
-//line templater/templates/simple.qtpl:8
-import "time"
-
-//line templater/templates/simple.qtpl:10
 import (
 	qtio422016 "io"
 
 	qt422016 "github.com/valyala/quicktemplate"
 )
 
-//line templater/templates/simple.qtpl:10
+//line templater/templates/simple.qtpl:6
 var (
 	_ = qtio422016.Copy
 	_ = qt422016.AcquireByteBuffer
 )
 
-//line templater/templates/simple.qtpl:11
+//line templater/templates/simple.qtpl:7
 // arbitrary Go code may be embedded here!
-
-func hash(s string) string {
-	h := fnv.New32a()
-	h.Write([]byte(s))
-	return fmt.Sprint(h.Sum32()) + fmt.Sprint(time.Now().Nanosecond())
-}
 
 type PostmanSimplePayload struct {
 	Name               string
@@ -89,319 +74,307 @@ type PostmanSimpleRequestURLParam struct {
 	Required    bool
 }
 
-//line templater/templates/simple.qtpl:69
+//line templater/templates/simple.qtpl:59
 func StreamMakePostmanSimple(qw422016 *qt422016.Writer, p PostmanSimplePayload) {
-//line templater/templates/simple.qtpl:69
+//line templater/templates/simple.qtpl:59
 	qw422016.N().S(`# `)
-//line templater/templates/simple.qtpl:70
+//line templater/templates/simple.qtpl:60
 	qw422016.E().S(p.Name)
-//line templater/templates/simple.qtpl:70
-	qw422016.N().S(` {`)
-//line templater/templates/simple.qtpl:70
-	qw422016.E().S(hash(p.Name))
-//line templater/templates/simple.qtpl:70
-	qw422016.N().S(`}
+//line templater/templates/simple.qtpl:60
+	qw422016.N().S(`
 
 `)
-//line templater/templates/simple.qtpl:72
+//line templater/templates/simple.qtpl:62
 	if p.Description != "" {
-//line templater/templates/simple.qtpl:73
+//line templater/templates/simple.qtpl:63
 		qw422016.E().S(p.Description)
-//line templater/templates/simple.qtpl:74
+//line templater/templates/simple.qtpl:64
 	}
-//line templater/templates/simple.qtpl:74
+//line templater/templates/simple.qtpl:64
 	qw422016.N().S(`
 
 
 `)
-//line templater/templates/simple.qtpl:77
+//line templater/templates/simple.qtpl:67
 	for _, dir := range p.RequestDirectories {
-//line templater/templates/simple.qtpl:77
+//line templater/templates/simple.qtpl:67
 		qw422016.N().S(`## `)
-//line templater/templates/simple.qtpl:78
+//line templater/templates/simple.qtpl:68
 		qw422016.E().S(dir.Name)
-//line templater/templates/simple.qtpl:78
-		qw422016.N().S(` {`)
-//line templater/templates/simple.qtpl:78
-		qw422016.E().S(hash(dir.Name))
-//line templater/templates/simple.qtpl:78
-		qw422016.N().S(`}
+//line templater/templates/simple.qtpl:68
+		qw422016.N().S(`
 
 `)
-//line templater/templates/simple.qtpl:80
+//line templater/templates/simple.qtpl:70
 		for _, req := range dir.Requests {
-//line templater/templates/simple.qtpl:80
+//line templater/templates/simple.qtpl:70
 			qw422016.N().S(`### `)
-//line templater/templates/simple.qtpl:81
+//line templater/templates/simple.qtpl:71
 			qw422016.E().S(req.Name)
-//line templater/templates/simple.qtpl:81
-			qw422016.N().S(` {`)
-//line templater/templates/simple.qtpl:81
-			qw422016.E().S(hash(req.Name))
-//line templater/templates/simple.qtpl:81
-			qw422016.N().S(`}
+//line templater/templates/simple.qtpl:71
+			qw422016.N().S(`
 
 | | |
 |--|--|
 |__Name__| `)
-//line templater/templates/simple.qtpl:85
+//line templater/templates/simple.qtpl:75
 			qw422016.E().S(req.Name)
-//line templater/templates/simple.qtpl:85
+//line templater/templates/simple.qtpl:75
 			qw422016.N().S(`|
 |__URL__| `)
-//line templater/templates/simple.qtpl:86
+//line templater/templates/simple.qtpl:76
 			qw422016.E().S(req.URL)
-//line templater/templates/simple.qtpl:86
+//line templater/templates/simple.qtpl:76
 			qw422016.N().S(` |
 |__Method__| `)
-//line templater/templates/simple.qtpl:87
+//line templater/templates/simple.qtpl:77
 			qw422016.E().S(req.HTTPVerb)
-//line templater/templates/simple.qtpl:87
+//line templater/templates/simple.qtpl:77
 			qw422016.N().S(`|
 
 `)
-//line templater/templates/simple.qtpl:89
+//line templater/templates/simple.qtpl:79
 			if req.Description != "" {
-//line templater/templates/simple.qtpl:89
+//line templater/templates/simple.qtpl:79
 				qw422016.N().S(`#### Description
 `)
-//line templater/templates/simple.qtpl:91
+//line templater/templates/simple.qtpl:81
 				qw422016.E().S(req.Description)
-//line templater/templates/simple.qtpl:92
+//line templater/templates/simple.qtpl:82
 			}
-//line templater/templates/simple.qtpl:92
+//line templater/templates/simple.qtpl:82
 			qw422016.N().S(`
 
 #### Request
 `)
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 			if req.CURL != "" {
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S(``)
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S(``)
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:95
+//line templater/templates/simple.qtpl:85
 				qw422016.N().S(`sh
 `)
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S(req.CURL)
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S(``)
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S(``)
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S("`")
-//line templater/templates/simple.qtpl:97
+//line templater/templates/simple.qtpl:87
 				qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:99
+//line templater/templates/simple.qtpl:89
 			}
-//line templater/templates/simple.qtpl:99
+//line templater/templates/simple.qtpl:89
 			qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:101
+//line templater/templates/simple.qtpl:91
 			if len(req.QueryParams) != 0 {
-//line templater/templates/simple.qtpl:101
+//line templater/templates/simple.qtpl:91
 				qw422016.N().S(`
 | Query Parameters | Value |
 |-----|-------|
 `)
-//line templater/templates/simple.qtpl:105
+//line templater/templates/simple.qtpl:95
 				for _, qp := range req.QueryParams {
-//line templater/templates/simple.qtpl:105
+//line templater/templates/simple.qtpl:95
 					qw422016.N().S(`| <span style="color:green">`)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.E().S(qp.Key)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.N().S(`</span> `)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.E().S(qp.Type)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					if qp.Required {
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 						qw422016.N().S(``)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 						qw422016.N().S("`")
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 						qw422016.N().S(`required`)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 						qw422016.N().S("`")
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					}
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.N().S(`| `)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.E().S(qp.Description)
-//line templater/templates/simple.qtpl:106
+//line templater/templates/simple.qtpl:96
 					qw422016.N().S(`|
 `)
-//line templater/templates/simple.qtpl:107
+//line templater/templates/simple.qtpl:97
 				}
-//line templater/templates/simple.qtpl:108
+//line templater/templates/simple.qtpl:98
 			}
-//line templater/templates/simple.qtpl:108
+//line templater/templates/simple.qtpl:98
 			qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:110
+//line templater/templates/simple.qtpl:100
 			if len(req.URLParams) != 0 {
-//line templater/templates/simple.qtpl:110
+//line templater/templates/simple.qtpl:100
 				qw422016.N().S(`| URL Params | Description |
 |-----|-------|
 `)
-//line templater/templates/simple.qtpl:113
+//line templater/templates/simple.qtpl:103
 				for _, up := range req.URLParams {
-//line templater/templates/simple.qtpl:113
+//line templater/templates/simple.qtpl:103
 					qw422016.N().S(`| <span style="color:green">`)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.E().S(up.Name)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.N().S(`</span> `)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.E().S(up.Type)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					if up.Required {
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 						qw422016.N().S(``)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 						qw422016.N().S("`")
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 						qw422016.N().S(`required`)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 						qw422016.N().S("`")
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					}
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.N().S(`| `)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.E().S(up.Description)
-//line templater/templates/simple.qtpl:114
+//line templater/templates/simple.qtpl:104
 					qw422016.N().S(`|
 `)
-//line templater/templates/simple.qtpl:115
+//line templater/templates/simple.qtpl:105
 				}
-//line templater/templates/simple.qtpl:116
+//line templater/templates/simple.qtpl:106
 			}
-//line templater/templates/simple.qtpl:116
+//line templater/templates/simple.qtpl:106
 			qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:118
+//line templater/templates/simple.qtpl:108
 			if len(req.Responses) != 0 {
-//line templater/templates/simple.qtpl:118
+//line templater/templates/simple.qtpl:108
 				qw422016.N().S(`#### Response Examples
 
 `)
-//line templater/templates/simple.qtpl:121
+//line templater/templates/simple.qtpl:111
 				for i, resp := range req.Responses {
-//line templater/templates/simple.qtpl:121
+//line templater/templates/simple.qtpl:111
 					qw422016.N().S(`##### Example `)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().D(i + 1)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S(`: `)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.E().S(resp.Name)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S(`
 
 `)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S(``)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S(``)
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:122
+//line templater/templates/simple.qtpl:112
 					qw422016.N().S(`json
 Code: `)
-//line templater/templates/simple.qtpl:125
+//line templater/templates/simple.qtpl:115
 					qw422016.N().D(resp.Code)
-//line templater/templates/simple.qtpl:125
+//line templater/templates/simple.qtpl:115
 					qw422016.N().S(` `)
-//line templater/templates/simple.qtpl:125
+//line templater/templates/simple.qtpl:115
 					qw422016.N().S(resp.Status)
-//line templater/templates/simple.qtpl:125
+//line templater/templates/simple.qtpl:115
 					qw422016.N().S(`
 ------------------------------------------
 `)
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S(resp.ResponseBody)
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S(``)
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S(``)
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S("`")
-//line templater/templates/simple.qtpl:127
+//line templater/templates/simple.qtpl:117
 					qw422016.N().S(`
 
 `)
-//line templater/templates/simple.qtpl:130
+//line templater/templates/simple.qtpl:120
 				}
-//line templater/templates/simple.qtpl:131
+//line templater/templates/simple.qtpl:121
 			}
-//line templater/templates/simple.qtpl:131
+//line templater/templates/simple.qtpl:121
 			qw422016.N().S(`
 `)
-//line templater/templates/simple.qtpl:133
+//line templater/templates/simple.qtpl:123
 		}
-//line templater/templates/simple.qtpl:134
+//line templater/templates/simple.qtpl:124
 	}
-//line templater/templates/simple.qtpl:134
+//line templater/templates/simple.qtpl:124
 	qw422016.N().S(`
 
 `)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 }
 
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 func WriteMakePostmanSimple(qq422016 qtio422016.Writer, p PostmanSimplePayload) {
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	StreamMakePostmanSimple(qw422016, p)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	qt422016.ReleaseWriter(qw422016)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 }
 
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 func MakePostmanSimple(p PostmanSimplePayload) string {
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	qb422016 := qt422016.AcquireByteBuffer()
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	WriteMakePostmanSimple(qb422016, p)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	qs422016 := string(qb422016.B)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	qt422016.ReleaseByteBuffer(qb422016)
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 	return qs422016
-//line templater/templates/simple.qtpl:136
+//line templater/templates/simple.qtpl:126
 }

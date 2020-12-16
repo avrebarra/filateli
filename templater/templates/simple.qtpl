@@ -3,18 +3,8 @@ i.e. it is just ignored by quicktemplate compiler (`qtc`). It is for humans.
 
 --------------------------------------------------------------------------------
 
-{% import "hash/fnv" %}
-{% import "fmt" %}
-{% import "time" %}
-
 {% code
 // arbitrary Go code may be embedded here!
-
-func hash(s string) string {
-	h := fnv.New32a()
-	h.Write([]byte(s))
-	return fmt.Sprint(h.Sum32()) +fmt.Sprint(time.Now().Nanosecond())
-}
 
 type PostmanSimplePayload struct {
 	Name               string
@@ -67,7 +57,7 @@ type PostmanSimpleRequestURLParam struct {
 %}
 
 {%- func MakePostmanSimple(p PostmanSimplePayload) -%}
-# {%s p.Name %} {{%s hash(p.Name) -%}}
+# {%s p.Name %}
 
 {%- if p.Description != "" -%}
 {%s p.Description -%}
@@ -75,10 +65,10 @@ type PostmanSimpleRequestURLParam struct {
 
 
 {%- for _, dir := range p.RequestDirectories -%}
-## {%s dir.Name %} {{%s hash(dir.Name) %}}
+## {%s dir.Name %}
 
 {%- for _, req := range dir.Requests -%}
-### {%s req.Name %} {{%s hash(req.Name) %}}
+### {%s req.Name %}
 
 | | |
 |--|--|

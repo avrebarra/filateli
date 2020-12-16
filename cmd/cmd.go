@@ -13,7 +13,7 @@ func customBanner(cli *clir.Cli) string {
 }
 
 func Initialize() {
-	cmd = clir.NewCli("filateli", "postman collections as local documentation server", "v0")
+	cmd = clir.NewCli("filateli", "convert postman collection to markdown files", "v0")
 	// Command.SetBannerFunction(customBanner)
 
 	quiet := false
@@ -25,7 +25,7 @@ func Initialize() {
 		return
 	})
 
-	cmdBuild := cmd.NewSubCommand("build", "build documentation folder")
+	cmdBuild := cmd.NewSubCommand("build", "build postman collection file")
 	{
 		src := "."
 		out := "."
