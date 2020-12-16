@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/avrebarra/filateli/cmd"
 )
 
@@ -8,5 +10,8 @@ import (
 
 func main() {
 	cmd.Initialize()
-	cmd.Run()
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("unexpected error:", err.Error())
+	}
 }

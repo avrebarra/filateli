@@ -40,6 +40,7 @@ func Initialize() {
 				SourcePath: srcclean,
 				OutputPath: outclean,
 			})
+
 			return subcmd.Run()
 		})
 	}
