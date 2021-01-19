@@ -3,12 +3,14 @@ package templater_test
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"io/ioutil"
 	"reflect"
 	"testing"
 
 	"github.com/avrebarra/filateli/postman"
 	"github.com/avrebarra/filateli/templater"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -52,8 +54,8 @@ func TestSimple_Apply(t *testing.T) {
 	co, err := loadSampleCollection()
 	require.Nil(t, err)
 
-	// codoc, err := loadSampleCollectionDoc()
-	// require.Nil(t, err)
+	codoc, err := loadSampleCollectionDoc()
+	require.Nil(t, err)
 
 	// test
 	type args struct {
@@ -61,9 +63,9 @@ func TestSimple_Apply(t *testing.T) {
 		coll postman.Collection
 	}
 	tests := []struct {
-		name string
-		args args
-		// wantDoc []byte
+		name    string
+		args    args
+		wantDoc []byte
 		wantErr bool
 	}{
 		{
@@ -72,26 +74,27 @@ func TestSimple_Apply(t *testing.T) {
 				ctx:  ctx,
 				coll: co,
 			},
-			// wantDoc: codoc,
+			wantDoc: codoc,
 			wantErr: false,
 		},
 		{
-			name: "empty input",
-			args: args{},
-			// wantDoc: []byte(""),
+			name:    "empty input",
+			args:    args{},
+			wantDoc: []byte(""),
 			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := e.Apply(tt.args.ctx, tt.args.coll)
+			gotDoc, err := e.Apply(tt.args.ctx, tt.args.coll)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Simple.Apply() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			// if !reflect.DeepEqual(gotDoc, tt.wantDoc) {
-			// 	t.Errorf("Simple.Apply() = %v, want %v", gotDoc, tt.wantDoc)
-			// }
+			fmt.Println("COK")
+			fmt.Println(string(gotDoc))
+			fmt.Println("COK")
+			assert.Equal(t, string(gotDoc), string(tt.wantDoc))
 		})
 	}
 }

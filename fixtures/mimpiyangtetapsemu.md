@@ -1,11 +1,11 @@
-# Mimpi Yang Tetap Semu {2687935044673892000}
+# Mimpi Yang Tetap Semu
 
 
 
 
-## Root {2703841893673893000}
+## Root
 
-### Banyak yang masih pergi {1467739031673894000}
+### Banyak yang masih pergi
 
 | | |
 |--|--|
@@ -16,6 +16,13 @@
 
 
 #### Request
+
+```sh
+curl -X 'POST' -d '{
+    "tentang": "kata maaf",
+    "dimana": "semua lengkuk ilalang"
+}' 'http://mimpi.tawa/angan'
+```
 
 
 
@@ -38,7 +45,7 @@ Code: 0
 ```
 
 
-### Rasa yang mengusang terusung {660401107673898000}
+### Rasa yang mengusang terusung
 
 | | |
 |--|--|
@@ -51,6 +58,10 @@ Ada rasa yang tak mau hilang. Aku takut sepi. Tapi yang lain tak berarti.
 
 #### Request
 
+```sh
+curl -X 'DELETE' -d '' 'http://mimpi.tawa/angan/92'
+```
+
 
 
 #### Response Examples
@@ -70,3 +81,7 @@ Code: 0
     }
 }
 ```
+
+
+
+

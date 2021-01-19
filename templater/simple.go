@@ -3,6 +3,8 @@ package templater
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"strings"
 
 	"github.com/avrebarra/filateli/postman"
 	"github.com/avrebarra/filateli/templater/templates"
@@ -82,14 +84,14 @@ func (e *Simple) makeTemplatePayload(collection postman.Collection) (payload tem
 				})
 			}
 
-			// // add curl string
-			// curlstr := ""
-			// mockrequest, _ := buildRequest(request.Request)
-			// if mockrequest != nil {
-			// 	scurl, _ := stringcurl.FromRequest(mockrequest)
-			// 	curlstr = string(scurl)
-			// }
-			// reqmarkupdata.CURL = curlstr
+			// add curl string
+			curlstr := ""
+			mockrequest, _ := http.NewRequest(request.Request.Method, request.Request.URL.Raw, strings.NewReader(request.Request.Body.Raw))
+			if mockrequest != nil {
+				scurl, _ := CURLFromRequest(mockrequest)
+				curlstr = string(scurl)
+			}
+			reqmarkupdata.CURL = curlstr
 
 			// register to list
 			reqdir.Requests = append(reqdir.Requests, reqmarkupdata)
